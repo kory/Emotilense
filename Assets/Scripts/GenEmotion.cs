@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ObjectInfo;
 
-public class GenEmotion : MonoBehaviour {
+class GenEmotion : MonoBehaviour {
 
     GameObject last;
 
