@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Web.Script.Serialization;
 
 namespace ConsoleApp1
 {
@@ -15,20 +16,99 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            var ser = new JavaScriptSerializer();
             var r = new Reader();
             bool HoloLensOn = true;
-
-            var writer = new JsonWriter();
-            var serializer = new JsonSerializer();
-            JObject json = JObject.Parse(string);
+            
+            
 
 
             while (HoloLensOn)
             {
-                Task<string> temp = r.ReadEmotions();
-                String json = temp.Result;
+                String json = r.ReadEmotions().Result;
+                var faces = ser.Deserialize<Temp>(json).faces;
+                ObjectInfo[] people = new ObjectInfo[faces.Length];
+                for (int i = 0; i < faces.Length; i++)
+                {
+                    var temp = faces[i];
+                    people[i] = new ObjectInfo((short) temp.location.left, (short) temp.location.top
+                        (short) temp.location.width, (short) temp.location.height, temp.scores.Emotion);
+                }
+            }
+        }
+    }
 
 
+
+    public class Temp
+    {
+        public Person[] faces { get; set; }
+    }
+
+    public class Person
+    {
+        public Location location { get; set; }
+        public Scores scores { get; set; }
+    }
+
+    public class Location
+    {
+        public int top { get; set; }
+        public int left { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
+    }
+
+    public class Scores
+    {
+        public static const double CUTOFF = 0.7;
+
+        public float anger { get; set; }
+        public float contempt { get; set; }
+        public float disgust { get; set; }
+        public float fear { get; set; }
+        public float happiness { get; set; }
+        public float neutral { get; set; }
+        public float sadness { get; set; }
+        public float surprise { get; set; }
+
+        public string Emotion()
+        {
+            if (anger > CUTOFF)
+            {
+                return "anger";
+            }
+            else if (contempt > CUTOFF)
+            {
+                return "contempt";
+            }
+            else if (disgust > CUTOFF)
+            {
+                return "disgust";
+            }
+            else if (fear > CUTOFF)
+            {
+                return "fear"
+            }
+            else if (happiness > CUTOFF)
+            {
+                return "happiness"
+            }
+            else if (neutral > CUTOFF)
+            {
+                return "neutral";
+            }
+            else if (sadness > CUTOFF)
+            {
+                return "sadness";
+            }
+            else if (surprise > CUTOFF)
+            {
+                return "sadness";
+
+            } else
+            {
+                return "";
             }
         }
     }
@@ -36,34 +116,25 @@ namespace ConsoleApp1
     class Reader
     {
 
-        public Reader() {}
+        public Reader() { }
 
         public async Task<string> ReadEmotions()
         {
             var client = new HttpClient();
 
-            // Request headers - replace this example key with your valid key.
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "130562a8eac64d94845518dd78c50fc6");
 
             string uri = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize?";
             HttpResponseMessage response;
-
-            // Request body. Try this sample with a locally stored JPEG image.
-            byte[] byteData = GetImageAsByteArray("IMAGE");
+.
+            byte[] byteData = KORYSMETHOD();
 
             using (var content = new ByteArrayContent(byteData))
             {
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 response = await client.PostAsync(uri, content);
-                return response.Content.Read
+                return response.Content.ReadAsStringAsync().Result;
             }
-        }
-
-        private byte[] GetImageAsByteArray(string imageFilePath)
-        {
-            FileStream fileStream = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read);
-            BinaryReader binaryReader = new BinaryReader(fileStream);
-            return binaryReader.ReadBytes((int)fileStream.Length);
         }
     }
 
@@ -146,7 +217,7 @@ namespace ConsoleApp1
             }
             */
 
-            
+
 
 
 
