@@ -8,10 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using UnityEngine.Bindings;
-using UnityEngine.Internal;
-using UnityEngine.Scripting;
-using ObjectInfo;
+using UnityEngine;
 
 namespace ConsoleApp1
 {
