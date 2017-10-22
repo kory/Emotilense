@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using UnityEngine;
 
 namespace ConsoleApp1
 {
@@ -31,8 +30,8 @@ namespace ConsoleApp1
                 for (int i = 0; i < faces.Length; i++)
                 {
                     var temp = faces[i];
-                    people[i] = new ObjectInfo((short) temp.location.left, (short) temp.location.top
-                        (short) temp.location.width, (short) temp.location.height, temp.scores.Emotion);
+                    people[i] = new ObjectInfo(temp.location.left, temp.location.top
+                        temp.location.width, temp.location.height, temp.scores.Emotion);
                 }
             }
         }
@@ -140,13 +139,13 @@ namespace ConsoleApp1
 
     class ObjectInfo
     {
-        private readonly short left;
-        private readonly short top;
-        private readonly short width;
-        private readonly short height;
+        private readonly int left;
+        private readonly int top;
+        private readonly int width;
+        private readonly int height;
         private readonly string emotion;
 
-        public ObjectInfo(short left, short top, short width, short height, string emotion)
+        public ObjectInfo(int left, int top, int width, int height, string emotion)
         {
             this.left = left;
             this.top = top;
@@ -155,7 +154,7 @@ namespace ConsoleApp1
             this.emotion = emotion;
         }
 
-        public short Left
+        public int Left
         {
             get
             {
@@ -163,7 +162,7 @@ namespace ConsoleApp1
             }
         }
 
-        public short Top
+        public int Top
         {
             get
             {
@@ -171,7 +170,7 @@ namespace ConsoleApp1
             }
         }
 
-        public short Width
+        public int Width
         {
             get
             {
@@ -179,7 +178,7 @@ namespace ConsoleApp1
             }
         }
 
-        public short Height
+        public int Height
         {
             get
             {
@@ -196,34 +195,4 @@ namespace ConsoleApp1
         }
     }
 
-    class GenEmotion : MonoBehaviour
-    {
-
-        GameObject last;
-
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        // creates a 3D text at the top of each person's head with emotion corresponding to their facial expression
-        void Update(ObjectInfo[] allInfo)
-        {
-            for (int i = 0; i < allInfo.Length; i++)
-            {
-                ObjectInfo info = allInfo[i];
-
-                Vector3 vector = new Vector3(Convert.ToSingle(info.Left), Convert.ToSingle(info.Top), Convert.ToSingle(1000 - info.Width);
-                GameObject text = new GameObject();
-                text.AddComponent<TextMesh>();
-                text.AddComponent<MeshRenderer>();
-                text.transform.position = vector;
-                text.GetComponent<TextMesh>().text = info.Emotion;
-                Destroy(last);
-                last = text;
-            }
-        }
-    }
 }

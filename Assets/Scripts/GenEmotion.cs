@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ObjectInfo;
 
 class GenEmotion : MonoBehaviour {
 
@@ -21,8 +20,8 @@ class GenEmotion : MonoBehaviour {
         for(int i = 0; i < allInfo.Length; i++)
         {
             ObjectInfo info = allInfo[i];
-            
-            Vector3 vector = new Vector3(Convert.ToSingle(info.Left), Convert.ToSingle(info.Top), Convert.ToSingle(short.MaxValue - info.Height));
+            // 100 is arbitrary
+            Vector3 vector = new Vector3(info.Left, info.Top, 100 - info.Height);
             GameObject text = new GameObject();
             text.AddComponent<TextMesh>();
             text.AddComponent<MeshRenderer>();
