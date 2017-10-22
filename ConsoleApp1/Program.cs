@@ -30,8 +30,8 @@ namespace ConsoleApp1
                 for (int i = 0; i < faces.Length; i++)
                 {
                     var temp = faces[i];
-                    people[i] = new ObjectInfo(temp.location.left, temp.location.top
-                        temp.location.width, temp.location.height, temp.scores.Emotion);
+                    people[i] = new ObjectInfo(temp.location.left, temp.location.top,
+                        temp.location.width, temp.location.height, temp.scores.Emotion());
                 }
             }
         }
@@ -60,7 +60,6 @@ namespace ConsoleApp1
 
     public class Scores
     {
-        public static const double CUTOFF = 0.7;
 
         public float anger { get; set; }
         public float contempt { get; set; }
@@ -73,35 +72,35 @@ namespace ConsoleApp1
 
         public string Emotion()
         {
-            if (anger > CUTOFF)
+            if (anger > 0.7)
             {
                 return "anger";
             }
-            else if (contempt > CUTOFF)
+            else if (contempt > 0.7)
             {
                 return "contempt";
             }
-            else if (disgust > CUTOFF)
+            else if (disgust > 0.7)
             {
                 return "disgust";
             }
-            else if (fear > CUTOFF)
+            else if (fear > 0.7)
             {
-                return "fear"
+                return "fear";
             }
-            else if (happiness > CUTOFF)
+            else if (happiness > 0.7)
             {
-                return "happiness"
+                return "happiness";
             }
-            else if (neutral > CUTOFF)
+            else if (neutral > 0.7)
             {
                 return "neutral";
             }
-            else if (sadness > CUTOFF)
+            else if (sadness > 0.7)
             {
                 return "sadness";
             }
-            else if (surprise > CUTOFF)
+            else if (surprise > 0.7)
             {
                 return "sadness";
 
@@ -126,6 +125,7 @@ namespace ConsoleApp1
             string uri = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize?";
             HttpResponseMessage response;
 .
+            //TODO: input actual method
             byte[] byteData = KORYSMETHOD();
 
             using (var content = new ByteArrayContent(byteData))
