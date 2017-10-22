@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HololensConnector : MonoBehaviour {
+public class HololensControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
